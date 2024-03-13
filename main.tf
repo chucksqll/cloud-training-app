@@ -113,12 +113,12 @@ resource "aws_lb_target_group_attachment" "instance_2" {
 resource "aws_lb" "load_balancer" {
   name               = "web-app-lb"
   load_balancer_type = "application"
-  subnets            = data.aws_subnet_ids.default_subnet.ids
+  subnets            = data.aws_subnets.default_subnet.ids
   security_groups    = [aws_security_group.alb.id]
 }
 
-data "aws_subnet_ids" "default_subnet" {
-  vpc_id = data.aws_vpc.default_vpc.id
+data "aws_subnets" "default_subnet" {
+  # vpc_id = data.aws_vpc.default_vpc.id
 }
 data "aws_vpc" "default_vpc" {
   default = true
