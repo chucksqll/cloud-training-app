@@ -6,15 +6,15 @@ terraform {
   #   dynamodb_table = "terraform-state-locking"
   #   encrypt        = true
   # }
-        backend "remote" {
-        # The name of your Terraform Cloud organization.
-        organization = "chucksqll-org"
+  backend "remote" {
+    # The name of your Terraform Cloud organization.
+    organization = "chucksqll-org"
 
-        # The name of the Terraform Cloud workspace to store Terraform state files in.
-        workspaces {
-          name = "learn-terraform-github-actions"
-        }
-      }
+    # The name of the Terraform Cloud workspace to store Terraform state files in.
+    workspaces {
+      name = "learn-terraform-github-actions"
+    }
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
