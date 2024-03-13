@@ -1,11 +1,20 @@
 terraform {
-    backend "s3" {
-    bucket         = "witek-cloud-training-bucket" # REPLACE WITH YOUR BUCKET NAME
-    key            = "terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-state-locking"
-    encrypt        = true
-  }
+  # backend "s3" {
+  #   bucket         = "witek-cloud-training-bucket" # REPLACE WITH YOUR BUCKET NAME
+  #   key            = "terraform.tfstate"
+  #   region         = "us-east-1"
+  #   dynamodb_table = "terraform-state-locking"
+  #   encrypt        = true
+  # }
+        backend "remote" {
+        # The name of your Terraform Cloud organization.
+        organization = "chucksqll-org"
+
+        # The name of the Terraform Cloud workspace to store Terraform state files in.
+        workspaces {
+          name = "learn-terraform-github-actions"
+        }
+      }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -31,7 +40,7 @@ resource "aws_s3_bucket_versioning" "terraform_bucket_versioning" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_crypto_conf" {
-  bucket        = aws_s3_bucket.terraform_state.bucket 
+  bucket = aws_s3_bucket.terraform_state.bucket
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
